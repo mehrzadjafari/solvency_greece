@@ -20,9 +20,8 @@ def main():
     if st.button("Authenticate"):
         if authenticate(username, password):
             st.success("Authentication successful!")
-            # Clear the authentication section
-            st.empty()
-            run_app()
+            # Clear the authentication section and rerun the app
+            st.experimental_rerun()
         else:
             st.error("Authentication failed!")
 
@@ -42,4 +41,4 @@ def run_app():
         st.markdown(download_dataframe(df), unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    main()
+    run_app()
