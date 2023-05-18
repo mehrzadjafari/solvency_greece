@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
@@ -38,9 +39,9 @@ def run_app():
     options.add_argument("--disable-features=NetworkService")
     options.add_argument("--window-size=1920x1080")
     options.add_argument("--disable-features=VizDisplayCompositor")
-    
-    # Create a ChromeDriver instance
-    driver = webdriver.Chrome(options=options)
+
+    # Create a ChromeDriver instance with webdriver_manager
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     # Call the extractor function with the provided driver and user date
     user_date = '12/05/2023'
@@ -49,7 +50,6 @@ def run_app():
 
     # Close the browser and stop the ChromeDriver service
     driver.quit()
-    service.stop()
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
