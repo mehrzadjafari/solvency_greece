@@ -30,10 +30,7 @@ def run_app():
     """)
 
     # read df from github
-    github_username = st.secrets["github_username"]
-    github_repo = st.secrets["github_repo"]
-    github_token = st.secrets["github_token"]
-    github_data_path = f"https://raw.githubusercontent.com/{github_username}/{github_repo}/main/table_data.csv?token={github_token}"
+    github_data_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/table_data.csv"
     df = pd.read_csv(github_data_path)
 
     # show df in app
