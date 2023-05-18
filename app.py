@@ -30,22 +30,17 @@ def main():
 
 def run_app():
     # Configure Chrome options for headless browsing
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
-
-    # Specify the path to the ChromeDriver executable
-    driver_path = "./chromedriver.exe"
-
-    # Create a ChromeDriver service
-    service = Service(driver_path)
-
-    # Start the ChromeDriver service
-    service.start()
-
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-features=NetworkService")
+    options.add_argument("--window-size=1920x1080")
+    options.add_argument("--disable-features=VizDisplayCompositor")
+    
     # Create a ChromeDriver instance
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(options=options)
 
     # Call the extractor function with the provided driver and user date
     user_date = '12/05/2023'
