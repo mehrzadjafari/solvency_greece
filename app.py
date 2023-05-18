@@ -5,7 +5,7 @@ import streamlit as st
 def authenticate(username, password):
     # Add your authentication logic here
     # Return True if authentication is successful, False otherwise
-    return (username == "admin" and password == "admin")
+    return (username == USERNAME and password == PASSWORD)
 
 def download_dataframe(df):
     csv = df.to_csv(index=False)
@@ -31,7 +31,7 @@ def run_app():
     """)
 
     # read df from github
-    df = pd.read_csv("https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/table_data.csv?token=GHSAT0AAAAAACCI2H2RFTMHM3U4WLAI2MOWZDF6GNQ")
+    df = pd.read_csv("https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/table_data.csv")
 
     # show df in app
     st.dataframe(df)
