@@ -31,7 +31,7 @@ def run_app():
     # Call the extractor function with the user date
     user_date = '12/05/2023'
     user_date = datetime.strptime(user_date, '%d/%m/%Y').date()
-    table_data, header_values = asyncio.get_event_loop().run_until_complete(extractor(user_date)
+    table_data, header_values = asyncio.get_event_loop().run_until_complete(extractor(user_date))
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
