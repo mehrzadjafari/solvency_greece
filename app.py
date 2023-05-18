@@ -4,6 +4,8 @@ import streamlit as st
 from datetime import datetime
 import asyncio
 from pyppeteer import launch
+import nest_asyncio
+nest_asyncio.apply()
 
 async def extractor(user_date):
 
