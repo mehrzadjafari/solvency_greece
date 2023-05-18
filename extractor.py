@@ -2,15 +2,22 @@ import time
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
-from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
 import streamlit as st
 
 @st.cache
 def extractor(driver, user_date):
+    # Configure Chrome options for headless browsing
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
 
+    # Create an instance of the ChromeDriver with headless options
+    driver = webdriver.Chrome(options=chrome_options)
     # Navigate to the website
     driver.get("https://keyd.gsis.gr/dsae2/iif/faces/pages/static/publicationList.xhtml#")
 
