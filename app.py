@@ -31,21 +31,25 @@ def main():
             st.error("Authentication failed!")
 
 def run_app():
-    # Call the extractor function with the user date
-    user_date = '12/05/2023'
-    user_date = datetime.strptime(user_date, '%d/%m/%Y').date()
+    # Set the desired date for extraction
+    user_date = datetime.strptime('12/05/2023', '%d/%m/%Y').date()
+
+    # Call the extractor function to get the table data and header values
     table_data, header_values = extractor(user_date)
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
 
+    # Display the DataFrame in the app
     st.title("ΕΓΔΙΧ - scraping app")
-
-    # show df in app
     st.dataframe(df)
 
     if st.button('Download'):
         st.markdown(download_dataframe(df), unsafe_allow_html=True)
+
+if __name__ == "__main__":
+    main()
+
 
 if __name__ == "__main__":
     main()  # I modified this from run_app to main
