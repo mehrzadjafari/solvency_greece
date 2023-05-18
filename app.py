@@ -2,10 +2,8 @@ import base64
 import pandas as pd
 import streamlit as st
 from datetime import datetime
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
+import asyncio
+from extractor import extractor
 
 def authenticate(username, password):
     # Return True if authentication is successful, False otherwise
@@ -30,26 +28,10 @@ def main():
             st.error("Authentication failed!")
 
 def run_app():
-    # Configure Chrome options for headless browsing
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--disable-features=NetworkService")
-    options.add_argument("--window-size=1920x1080")
-    options.add_argument("--disable-features=VizDisplayCompositor")
-
-    # Create a ChromeDriver instance with webdriver_manager
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-
-    # Call the extractor function with the provided driver and user date
+    # Call the extractor function with the user date
     user_date = '12/05/2023'
     user_date = datetime.strptime(user_date, '%d/%m/%Y').date()
-    table_data, header_values = extractor(driver, user_date)
-
-    # Close the browser and stop the ChromeDriver service
-    driver.quit()
+    table_data, header_values = asyncio.run(extractor(user_date))
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
@@ -63,4 +45,4 @@ def run_app():
         st.markdown(download_dataframe(df), unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    run_app()
+    main()  # I modified this from run_app to main
