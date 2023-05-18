@@ -4,6 +4,7 @@ import streamlit as st
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 def authenticate(username, password):
     # Return True if authentication is successful, False otherwise
@@ -35,18 +36,25 @@ def run_app():
     chrome_options.add_argument("--no-sandbox")
 
     # Specify the path to the ChromeDriver executable
-    driver_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/chromedriver.exe"
+    driver_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/chromedriver.exe" 
 
-    # Create an instance of the ChromeDriver with headless options
-    driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+    # Create a ChromeDriver service
+    service = Service(driver_path)
+
+    # Start the ChromeDriver service
+    service.start()
+
+    # Create a ChromeDriver instance
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
     # Call the extractor function with the provided driver and user date
     user_date = '12/05/2023'
     user_date = datetime.strptime(user_date, '%d/%m/%Y').date()
     table_data, header_values = extractor(driver, user_date)
 
-    # Close the browser
+    # Close the browser and stop the ChromeDriver service
     driver.quit()
+    service.stop()
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
