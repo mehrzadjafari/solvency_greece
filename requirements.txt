@@ -58,8 +58,6 @@ Pympler==1.0.1
 pyrsistent==0.19.3
 PySocks==1.7.1
 python-dateutil==2.8.2
-pytz==2023.3
-pywin32==306
 PyYAML==6.0
 pyzmq==25.0.2
 requests==2.30.0
