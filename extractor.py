@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options
 import streamlit as st
 
 @st.cache
-def extractor(driver, user_date):
+def extractor(user_date):
     # Configure Chrome options for headless browsing
     chrome_options = Options()
     chrome_options.add_argument("--headless")
