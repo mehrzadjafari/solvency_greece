@@ -44,11 +44,11 @@ def main():
     if st.button("Authenticate"):
         if authenticate(username, password):
             st.success("Authentication successful!")
-            run_app()
+            run_app(df)  # Pass the df DataFrame to run_app
         else:
             st.error("Authentication failed!")
 
-def run_app():
+def run_app(df):
     st.write("""
     # ΕΓΔΙΧ - scraping app
     """)
