@@ -14,24 +14,20 @@ def download_dataframe(df):
 
 def main():
     # Authentication
-    st.title("ΕΓΔΙΧ - Authentication")
-    auth_flag = False  # Flag to track authentication state
-
-    if st.button("Show Authentication"):
-        auth_flag = True
-
-    if auth_flag:
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        if st.button("Authenticate"):
-            if authenticate(username, password):
-                st.success("Authentication successful!")
-                run_app()
-            else:
-                st.error("Authentication failed!")
+    st.title("Authentication")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    if st.button("Authenticate"):
+        if authenticate(username, password):
+            st.success("Authentication successful!")
+            run_app()
+        else:
+            st.error("Authentication failed!")
 
 def run_app():
-    st.title("ΕΓΔΙΧ - Scraping App")
+    st.write("""
+    # ΕΓΔΙΧ - scraping app
+    """)
 
     # read df from github
     github_data_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/table_data.csv"
