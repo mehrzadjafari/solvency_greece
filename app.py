@@ -1,6 +1,30 @@
 import base64
 import pandas as pd
 import streamlit as st
+from datetime import datetime
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from extractor import extractor
+
+# Configure Chrome options for headless browsing
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+
+# Create an instance of the ChromeDriver with headless options
+driver = webdriver.Chrome(options=chrome_options)
+
+# Call the extractor function with the provided driver and user date
+user_date = '12/05/2023'
+user_date = datetime.strptime(user_date, '%d/%m/%Y').date()
+table_data, header_values = extractor(driver, user_date)
+
+# Close the browser
+driver.quit()
+
+# Convert the table_data list to a DataFrame
+df = pd.DataFrame(table_data, columns=header_values)
 
 def authenticate(username, password):
     # Return True if authentication is successful, False otherwise
@@ -28,10 +52,6 @@ def run_app():
     st.write("""
     # ΕΓΔΙΧ - scraping app
     """)
-
-    # read df from github
-    github_data_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/table_data.csv"
-    df = pd.read_csv(github_data_path)
 
     # show df in app
     st.dataframe(df)
