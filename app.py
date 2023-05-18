@@ -50,7 +50,3 @@ def run_app():
 
 if __name__ == "__main__":
     main()
-
-
-if __name__ == "__main__":
-    main()  # I modified this from run_app to main
