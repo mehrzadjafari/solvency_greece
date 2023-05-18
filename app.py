@@ -26,7 +26,7 @@ def main():
 
 def run_app():
     st.write("""
-    # govgr web scraping app
+    # ΕΓΔΙΧ - scraping app
     """)
 
     # read df from github
