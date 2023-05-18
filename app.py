@@ -30,6 +30,7 @@ def main():
         else:
             st.error("Authentication failed!")
 
+
 def run_app():
     # Set the desired date for extraction
     user_date = datetime.strptime('12/05/2023', '%d/%m/%Y').date()
