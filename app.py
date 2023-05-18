@@ -36,7 +36,7 @@ def run_app():
     chrome_options.add_argument("--no-sandbox")
 
     # Specify the path to the ChromeDriver executable
-    driver_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/chromedriver.exe" 
+    driver_path = "./chromedriver.exe"
 
     # Create a ChromeDriver service
     service = Service(driver_path)
@@ -68,4 +68,4 @@ def run_app():
         st.markdown(download_dataframe(df), unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    main()
+    run_app()
