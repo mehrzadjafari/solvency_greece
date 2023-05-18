@@ -21,8 +21,8 @@ def download_dataframe(df):
 def main():
     # Authentication
     st.title("Authentication")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    username = st.text_input("Username", key="username_input")
+    password = st.text_input("Password", type="password", key="password_input")
     if st.button("Authenticate"):
         if authenticate(username, password):
             st.success("Authentication successful!")
