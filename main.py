@@ -26,4 +26,4 @@ data = pd.DataFrame(table_data, columns=header_values)
 # print(data)
 
 # Save the data to a CSV file
-data.to_csv("C:/Users/engme/pyenv/my_notebooks/VS Code/AZTrade/table_data.csv", index=False)
+data.to_csv("table_data.csv", index=False)
