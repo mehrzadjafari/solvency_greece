@@ -21,6 +21,8 @@ def main():
         if authenticate(username, password):
             st.success("Authentication successful!")
             run_app()
+            # Clear the authentication section
+            st.empty()
         else:
             st.error("Authentication failed!")
 
