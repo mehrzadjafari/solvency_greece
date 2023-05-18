@@ -5,6 +5,8 @@ from datetime import datetime
 import asyncio
 import streamlit as st
 
+from extractor import extractor
+
 
 def authenticate(username, password):
     # Return True if authentication is successful, False otherwise
