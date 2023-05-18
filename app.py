@@ -31,8 +31,7 @@ def run_app():
     """)
 
     # read df from github
-    github_data_path = "https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/"
-    df = pd.read_csv(github_data_path + 'table_data.csv')
+    df = pd.read_csv("https://raw.githubusercontent.com/mehrzadjafari/solvency_greece/main/table_data.csv")
 
     # show df in app
     st.dataframe(df)
