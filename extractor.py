@@ -5,17 +5,25 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
-from selenium.webdriver.firefox.options import Options
 import streamlit as st
+import os, sys
+
+@st.experimental_singleton
+def installff():
+  os.system('sbase install geckodriver')
+  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
+
+_ = installff()
+from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
+
 
 @st.cache_resource
 def extractor(user_date):
-    # Configure Firefox options for headless browsing
-    firefox_options = Options()
-    firefox_options.add_argument("--headless")
+    opts = FirefoxOptions()
+    opts.add_argument("--headless")
+    driver = webdriver.Firefox(options=opts)
 
-    # Create an instance of the FirefoxDriver with headless options
-    driver = webdriver.Firefox(options=firefox_options)
     # Navigate to the website
     driver.get("https://keyd.gsis.gr/dsae2/iif/faces/pages/static/publicationList.xhtml#")
 
