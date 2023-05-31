@@ -34,8 +34,8 @@ def main():
     col2.markdown("<h1 style='text-align: center;'>MMEA Transformation</h1>", unsafe_allow_html=True)
     selected_date = st.date_input("Select a date", date.today())
     user_date = datetime.combine(selected_date, datetime.min.time()).date()
-    username = st.text_input("Username", key="username_input")
-    password = st.text_input("Password", type="password", key="password_input")
+#     username = st.text_input("Username", key="username_input")
+#     password = st.text_input("Password", type="password", key="password_input")
 #     if st.button("Authenticate"):
 #         if authenticate(username, password):
 #             st.success("Authentication successful!")
