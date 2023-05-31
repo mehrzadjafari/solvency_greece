@@ -7,6 +7,10 @@ import io
 
 from extractor import extractor
 
+@st.cache_data
+def cached_extractor(user_date):
+    return extractor(user_date)
+
 
 def authenticate(username, password):
     # Return True if authentication is successful, False otherwise
