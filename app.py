@@ -32,7 +32,7 @@ def main():
 
     # Center-align the title
     col2.markdown("<h1 style='text-align: center;'>MMEA Transformation</h1>", unsafe_allow_html=True)
-    selected_date = st.date_input("Select a date", date.today())
+    selected_date = st.date_input("From this date", date.today())
     user_date = datetime.combine(selected_date, datetime.min.time()).date()
 #     username = st.text_input("Username", key="username_input")
 #     password = st.text_input("Password", type="password", key="password_input")
