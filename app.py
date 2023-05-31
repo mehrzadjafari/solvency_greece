@@ -12,9 +12,9 @@ from extractor import extractor
 #     return extractor(user_date)
 
 
-def authenticate(username, password):
-    # Return True if authentication is successful, False otherwise
-    return (username == st.secrets["USERNAME"] and password == st.secrets["PASSWORD"])
+# def authenticate(username, password):
+#     # Return True if authentication is successful, False otherwise
+#     return (username == st.secrets["USERNAME"] and password == st.secrets["PASSWORD"])
 
 def download_dataframe(df):
     excel_file = io.BytesIO()
@@ -36,12 +36,12 @@ def main():
     user_date = datetime.combine(selected_date, datetime.min.time()).date()
     username = st.text_input("Username", key="username_input")
     password = st.text_input("Password", type="password", key="password_input")
-    if st.button("Authenticate"):
-        if authenticate(username, password):
-            st.success("Authentication successful!")
-            run_app(user_date)
-        else:
-            st.error("Authentication failed!")
+#     if st.button("Authenticate"):
+#         if authenticate(username, password):
+#             st.success("Authentication successful!")
+    run_app(user_date)
+#         else:
+#             st.error("Authentication failed!")
     
 
 
