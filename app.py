@@ -7,9 +7,9 @@ import io
 
 from extractor import extractor
 
-@st.cache_data
-def cached_extractor(user_date):
-    return extractor(user_date)
+# @st.cache_data
+# def cached_extractor(user_date):
+#     return extractor(user_date)
 
 
 def authenticate(username, password):
@@ -48,7 +48,7 @@ def main():
 def run_app(user_date):
 
     # Call the cached_extractor function to get the table data and header values
-    table_data, header_values = cached_extractor(user_date)
+    table_data, header_values = extractor(user_date)
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
