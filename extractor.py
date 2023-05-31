@@ -47,7 +47,7 @@ def extractor(user_date):
     out_of_range_counter = 0
 
     # Extract data from each page until reaching the beginning of 2023
-    while i < 30:
+    while i < 60:
         element = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"tr[data-ri='{(i * 100)}']")))
         # Find the table element
         table_element = driver.find_element(By.CSS_SELECTOR, "table[role='grid']")
