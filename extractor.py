@@ -5,19 +5,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 import streamlit as st
 
 @st.cache_resource
 def extractor(user_date):
-    # Configure Chrome options for headless browsing
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--no-sandbox")
+    # Configure Firefox options for headless browsing
+    firefox_options = Options()
+    firefox_options.add_argument("--headless")
 
-    # Create an instance of the ChromeDriver with headless options
-    driver = webdriver.Chrome(options=chrome_options)
+    # Create an instance of the FirefoxDriver with headless options
+    driver = webdriver.Firefox(options=firefox_options)
     # Navigate to the website
     driver.get("https://keyd.gsis.gr/dsae2/iif/faces/pages/static/publicationList.xhtml#")
 

@@ -9,16 +9,11 @@ COPY requirements.txt .
 
 # Install the Python dependencies
 RUN apt-get update \
-    && apt-get install -y wget curl unzip gnupg2 apt-transport-https ca-certificates \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
-    && CHROME_VERSION=$(google-chrome-stable --version | awk '{print $NF}' | awk -F. '{print $1}') \
-    && CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION) \
-    && wget -q --continue -P /tmp "https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip" \
-    && unzip /tmp/chromedriver_linux64.zip -d /usr/local/bin \
-    && chmod +x /usr/local/bin/chromedriver \
+    && apt-get install -y wget curl unzip gnupg2 apt-transport-https ca-certificates firefox-esr \
+    && GECKO_DRIVER_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep tag_name | cut -d '"' -f 4) \
+    && wget -q --continue -P /tmp "https://github.com/mozilla/geckodriver/releases/download/$GECKO_DRIVER_VERSION/geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz" \
+    && tar -xzf /tmp/geckodriver-$GECKO_DRIVER_VERSION-linux64.tar.gz -C /usr/local/bin \
+    && chmod +x /usr/local/bin/geckodriver \
     && pip install --no-cache-dir -r requirements.txt
 
 # Copy all the files to the container
