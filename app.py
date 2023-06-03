@@ -8,6 +8,11 @@ def authenticate(username, password):
     # Return True if authentication is successful, False otherwise
     return (username == st.secrets["USERNAME"] and password == st.secrets["PASSWORD"])
 
+@st.cache
+def cached_extractor(user_date):
+    # Call the extractor function to get the table data and header values
+    return extractor(user_date)
+
 def login():
     st.title("Login Page")
     username = st.text_input("Username", key="username_input")
@@ -27,7 +32,7 @@ def content_page():
     user_date = datetime.combine(selected_date, datetime.min.time()).date()
     
     # Call the cached_extractor function to get the table data and header values
-    table_data, header_values = extractor(user_date)
+    table_data, header_values = cached_extractor(user_date)
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
