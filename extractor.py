@@ -7,6 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 import streamlit as st
+import pandas as pd
+import base64
+import io
 
 @st.cache_resource
 def extractor(user_date):
@@ -47,7 +50,7 @@ def extractor(user_date):
     out_of_range_counter = 0
 
     # Extract data from each page until reaching the beginning of 2023
-    while i < 60:
+    while i < 30:
         element = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"tr[data-ri='{(i * 100)}']")))
         # Find the table element
         table_element = driver.find_element(By.CSS_SELECTOR, "table[role='grid']")
@@ -117,3 +120,16 @@ def extractor(user_date):
     driver.quit()
 
     return table_data, header_values
+
+
+
+
+def download_dataframe(df):
+    excel_file = io.BytesIO()
+    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+    excel_file.seek(0)
+    excel_data = excel_file.getvalue()
+    b64 = base64.b64encode(excel_data).decode()
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data.xlsx">Download Excel file</a>'
+    return href
