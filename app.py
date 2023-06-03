@@ -7,26 +7,32 @@ import io
 
 from extractor import extractor, download_dataframe
 
-def main():
-    # Create two columns
-    col1, col2, col3 = st.columns([1, 2, 1])
+def creds_entered():
+    if st.session_state['user'].strip() == USERNAME and st.session_state["passwd"].strip() == PASSWORD:
+        st.session_state['authenticated'] = True
+    else:
+        st.session_state['authenticated'] = False
+        st.error("Invalid Username/Password!")
 
-    # Center-align the title
-    col2.markdown("<h1 style='text-align: center;'>MMEA Transformation</h1>", unsafe_allow_html=True)
-    selected_date = st.date_input("From this date", date.today())
+
+def authenticate_user():
+    if 'authenticated' not in st.session_state:
+        st.text_input(label="Username", value="", key="user", on_change=creds_entered)
+        st.text_input(label="Password", type="password", key="passwd", on_change=creds_entered)
+        return False
+    else:
+        if st.session_state['authenticated']:
+            return True
+        else:
+            st.text_input(label="Username", value="", key="user", on_change=creds_entered)
+            st.text_input(label="Password", type="password", key="passwd", on_change=creds_entered)
+            return False
+
+        
+if authenticate_user():
+    st.title("MMEA Transformation")
+    selected_date = st.date_input("From date", date.today())
     user_date = datetime.combine(selected_date, datetime.min.time()).date()
-#     username = st.text_input("Username", key="username_input")
-#     password = st.text_input("Password", type="password", key="password_input")
-#     if st.button("Authenticate"):
-#         if authenticate(username, password):
-#             st.success("Authentication successful!")
-    run_app(user_date)
-#         else:
-#             st.error("Authentication failed!")
-    
-
-
-def run_app(user_date):
 
     # Call the cached_extractor function to get the table data and header values
     table_data, header_values = extractor(user_date)
@@ -39,9 +45,5 @@ def run_app(user_date):
     st.dataframe(df)
 
     if st.button('Download'):
-        download_link = download_dataframe(df)
+        download_link = download_dataframe(df, user_date)
         st.markdown(download_link, unsafe_allow_html=True)
-
-
-if __name__ == "__main__":
-    main()
