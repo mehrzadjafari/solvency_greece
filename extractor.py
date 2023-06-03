@@ -125,7 +125,7 @@ def extractor(user_date):
 
 
 
-def download_dataframe(df):
+def download_dataframe(df, user_date):
     # Create a BytesIO buffer for the Excel file
     excel_file = io.BytesIO()
 
@@ -168,5 +168,7 @@ def download_dataframe(df):
     b64 = base64.b64encode(excel_data).decode()
 
     # Generate the download link with the encoded file data
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data.xlsx">Download Excel file</a>'
+    end_date = str(date.today()).replace('-', '')
+    user_date = str(user_date).replace('-', '')
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="solvency_extraction_{user_date}-{end_date}.xlsx">Download Excel file</a>'
     return href
