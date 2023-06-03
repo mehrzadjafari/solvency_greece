@@ -10,6 +10,7 @@ import streamlit as st
 import pandas as pd
 import base64
 import io
+import xlsxwriter
 
 @st.cache_resource
 def extractor(user_date):
