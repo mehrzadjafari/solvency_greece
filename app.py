@@ -12,7 +12,7 @@ def creds_entered():
         st.session_state['authenticated'] = True
     else:
         st.session_state['authenticated'] = False
-        st.error("Invalid Username/Password!")
+        st.error("Invalid Username/Password!👀")
 
 
 def authenticate_user():
