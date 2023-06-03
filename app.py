@@ -8,7 +8,7 @@ import io
 from extractor import extractor, download_dataframe
 
 def creds_entered():
-    if st.session_state['user'].strip() == USERNAME and st.session_state["passwd"].strip() == PASSWORD:
+    if st.session_state['user'].strip() == st.secrets["USERNAME"] and st.session_state["passwd"].strip() == st.secrets["PASSWORD"]:
         st.session_state['authenticated'] = True
     else:
         st.session_state['authenticated'] = False
