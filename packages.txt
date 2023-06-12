@@ -1,5 +1,2 @@
-chromium
+chromium = 114.0.5735.90
 chromium-driver
-chromium
-chromium-driver
-http://security.debian.org/debian-security bookworm-security/updates
