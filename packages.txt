@@ -1,3 +1,4 @@
+--allow-releaseinfo-change update
 chromium
-chromium-driver=deb11u1
+chromium-driver
 
