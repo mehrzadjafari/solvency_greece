@@ -5,29 +5,33 @@ from datetime import datetime, date
 import streamlit as st
 import io
 
-from extractor import extractor
+from extractor import extractor, download_dataframe
 
-@st.cache_data
-def cached_extractor(user_date):
-    return extractor(user_date)
+def creds_entered():
+    if st.session_state['user'].strip() == st.secrets["USERNAME"] and st.session_state["passwd"].strip() == st.secrets["PASSWORD"]:
+        st.session_state['authenticated'] = True
+    else:
+        st.session_state['authenticated'] = False
+        st.error("Invalid Username/Password!👀")
 
-def download_dataframe(df):
-    excel_file = io.BytesIO()
-    with pd.ExcelWriter(excel_file, engine='xlsxwriter') as writer:
-        df.to_excel(writer, index=False, sheet_name='Sheet1')
-    excel_file.seek(0)
-    excel_data = excel_file.getvalue()
-    b64 = base64.b64encode(excel_data).decode()
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data.xlsx">Download Excel file</a>'
-    return href
 
-def main():
-    # Create two columns
-    col1, col2, col3 = st.columns([1, 2, 1])
+def authenticate_user():
+    if 'authenticated' not in st.session_state:
+        st.text_input(label="Username", value="", key="user", on_change=creds_entered)
+        st.text_input(label="Password", type="password", key="passwd", on_change=creds_entered)
+        return False
+    else:
+        if st.session_state['authenticated']:
+            return True
+        else:
+            st.text_input(label="Username", value="", key="user", on_change=creds_entered)
+            st.text_input(label="Password", type="password", key="passwd", on_change=creds_entered)
+            return False
 
-    # Center-align the title
-    col2.markdown("<h1 style='text-align: center;'>MMEA Transformation</h1>", unsafe_allow_html=True)
-    selected_date = st.date_input("Select a date", date.today())
+
+if authenticate_user():
+    st.title("MMEA Transformation")
+    selected_date = st.date_input("From date", date.today())
     user_date = datetime.combine(selected_date, datetime.min.time()).date()
     run_app(user_date)
     
@@ -36,7 +40,7 @@ def main():
 def run_app(user_date):
 
     # Call the cached_extractor function to get the table data and header values
-    table_data, header_values = cached_extractor(user_date)
+    table_data, header_values = extractor(user_date)
 
     # Convert the table_data list to a DataFrame
     df = pd.DataFrame(table_data, columns=header_values)
@@ -46,7 +50,7 @@ def run_app(user_date):
     st.dataframe(df)
 
     if st.button('Download'):
-        download_link = download_dataframe(df)
+        download_link = download_dataframe(df, user_date)
         st.markdown(download_link, unsafe_allow_html=True)
 
 
