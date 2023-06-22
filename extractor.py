@@ -22,6 +22,7 @@ def extractor(user_date):
 
     # Create an instance of the ChromeDriver with headless options
     driver = webdriver.Chrome(options=chrome_options)
+    driver.gatherUsageStats = False
     # Navigate to the website
     driver.get("https://keyd.gsis.gr/dsae2/iif/faces/pages/static/publicationList.xhtml#")
 
