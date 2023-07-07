@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 import streamlit as st
 import os, sys
 import io
+import xlsxwriter
 
 @st.experimental_singleton
 def installff():
