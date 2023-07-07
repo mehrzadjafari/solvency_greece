@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 import streamlit as st
 import os, sys
+import io
 
 @st.experimental_singleton
 def installff():
