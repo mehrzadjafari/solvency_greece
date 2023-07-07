@@ -3,4 +3,3 @@ pandas==2.0.1
 streamlit==1.22.0
 selenium==4.9.1
 xlsxwriter==3.1.1
-io
