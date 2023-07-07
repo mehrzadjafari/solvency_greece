@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 import streamlit as st
 import pandas as pd
 import base64
@@ -21,7 +22,8 @@ def extractor(user_date):
     chrome_options.add_argument("--no-sandbox")
 
     # Create an instance of the ChromeDriver with headless options
-    driver = webdriver.Chrome(options=chrome_options)
+    #driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(service=Service('/usr/lib/chromium-browser/chromedriver'), options=chrome_options)
     driver.gatherUsageStats = False
     # Navigate to the website
     driver.get("https://keyd.gsis.gr/dsae2/iif/faces/pages/static/publicationList.xhtml#")
