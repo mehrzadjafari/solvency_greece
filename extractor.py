@@ -123,3 +123,57 @@ def extractor(user_date):
     driver.quit()
 
     return table_data, header_values
+
+
+
+
+
+
+
+def download_dataframe(df, user_date):
+    # Create a BytesIO buffer for the Excel file
+    excel_file = io.BytesIO()
+
+    # Create an XlsxWriter workbook and set the default cell format
+    workbook = xlsxwriter.Workbook(excel_file, {'remove_timezone': True})
+    worksheet = workbook.add_worksheet('Data')
+    default_format = workbook.add_format({'text_wrap': True})
+
+    # Define header format with dark blue background and white font color
+    header_format = workbook.add_format({
+        'bold': True,
+        'bg_color': '#00008B',
+        'font_color': 'white',
+        'text_wrap': True
+    })
+
+    # Iterate over the dataframe columns and adjust the column widths
+    for col_num, column in enumerate(df.columns):
+        # Get the maximum length of the values in the column
+        column_width = max(df[column].astype(str).map(len).max(), len(column))
+        # Set the column width in the worksheet
+        worksheet.set_column(col_num, col_num, column_width, default_format)
+
+        # Write the column name in the header row with the specified format
+        worksheet.write(0, col_num, column, header_format)
+
+    # Write the dataframe data starting from row 1
+    for row_num, values in enumerate(df.values, start=1):
+        for col_num, value in enumerate(values):
+            worksheet.write(row_num, col_num, value, default_format)
+
+    # Close the workbook and save the Excel file
+    workbook.close()
+
+    # Set the buffer position to the start of the file
+    excel_file.seek(0)
+    # Retrieve the Excel file data as bytes
+    excel_data = excel_file.getvalue()
+    # Encode the Excel file data as base64
+    b64 = base64.b64encode(excel_data).decode()
+
+    # Generate the download link with the encoded file data
+    end_date = str(date.today()).replace('-', '')
+    user_date = str(user_date).replace('-', '')
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="solvency_extraction_{user_date}-{end_date}.xlsx">Download Excel file</a>'
+    return href
